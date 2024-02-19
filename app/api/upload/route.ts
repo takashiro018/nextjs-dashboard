@@ -1,29 +1,54 @@
-import { writeFile } from 'fs/promises'
-import { NextRequest, NextResponse } from 'next/server'
-import { join } from 'path'
+import mime from "mime";
+import { join } from "path";
+import { stat, mkdir, writeFile } from "fs/promises";
+//import * as dateFn from "date-fns";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-    const data = await request.formData()
-    const file: File | null = data.get('file') as unknown as File
+    const formData = await request.formData();
 
-    console.log(data);
-    console.log(file);
+    const file = formData.get('image_url') as Blob | null;
     if (!file) {
-        return NextResponse.json({ success: false })
+        return NextResponse.json(
+            { error: "File blob is required." },
+            { status: 400 }
+        );
     }
 
-    const bytes = await file.arrayBuffer()
-    const buffer = Buffer.from(bytes)
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const relativeUploadDir = `/customers/`;
+    const uploadDir = join(process.cwd(), "public", relativeUploadDir);
 
-    console.log(bytes);
-    console.log(buffer);
+    try {
+        await stat(uploadDir);
+    } catch (e: any) {
+        if (e.code === "ENOENT") {
+            await mkdir(uploadDir, { recursive: true });
+        } else {
+            console.error(
+                "Error while trying to create directory when uploading a file\n",
+                e
+            );
+            return NextResponse.json(
+                { error: "Something went wrong." },
+                { status: 500 }
+            );
+        }
+    }
 
-    // With the file data in the buffer, you can do whatever you want with it.
-    // For this, we'll just write it to the filesystem in a new location
-    const path = join('/', 'public/customers', file.name)
-    console.log(path);
-    await writeFile(path, buffer)
-    console.log(`open ${path} to see the uploaded file`)
-
-    return NextResponse.json({ success: true })
+    try {
+        const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+        const filename = `${file.name.replace(
+            /\.[^/.]+$/,
+            ""
+        )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
+        await writeFile(`${uploadDir}/${filename}`, buffer);
+        return NextResponse.json({ fileUrl: `${relativeUploadDir}/${filename}` });
+    } catch (e) {
+        console.error("Error while trying to upload a file\n", e);
+        return NextResponse.json(
+            { error: "Something went wrong." },
+            { status: 500 }
+        );
+    }
 }

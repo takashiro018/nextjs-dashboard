@@ -48,7 +48,7 @@ export default function Form() {
             }
 
             const data: { image_url: string } = await res.json();
-
+            console.log(data);
             setImageUrl("/customers/" + data.image_url);
         } catch (error) {
             console.error("something went wrong, check your console.");
@@ -168,7 +168,8 @@ export default function Form() {
                                         className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                                     >
                                         <span>Upload a file</span>
-                                        <input id="image_url" name="image_url" type="file" className="sr-only" onChange={onImageFileChange} />
+                                        <input id="image_url" name="image_url" type="file" className="sr-only"
+                                            onChange={onImageFileChange} />
                                     </label>
                                     <p className="pl-1">or drag and drop</p>
                                 </div>
