@@ -41,6 +41,7 @@ export default function Form() {
                 method: "POST",
                 body: formData,
             });
+            console.log(res);
 
             if (!res.ok) {
                 console.error("something went wrong, check your console.");
