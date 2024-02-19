@@ -191,7 +191,6 @@ export async function createCustomer(prevState: cState, formData: FormData) {
     const validatedFields = CreateCustomer.safeParse({
         customerName: formData.get('name'),
         customerEmail: formData.get('email'),
-        customerImg: File,
     });
 
     // If form validation fails, return errors early. Otherwise, continue.
