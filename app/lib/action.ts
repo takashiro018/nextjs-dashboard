@@ -183,14 +183,16 @@ export async function createCustomer(prevState: cState, formData: FormData) {
         throw new Error('No file uploaded')
     }
 
-    const bytes = await file.arrayBuffer()
-    const buffer = Buffer.from(bytes)
+    console.log(file);
+
+    //const bytes = await file.arrayBuffer()
+    //const buffer = Buffer.from(bytes)
 
     // With the file data in the buffer, you can do whatever you want with it.
     // For this, we'll just write it to the filesystem in a new location
-    const path = join('/', 'public/customers/', file.name)
-    await writeFile(path, buffer)
-    console.log(`open ${path} to see the uploaded file`)
+    //const path = join('/', 'public/customers/', file.name)
+    //await writeFile(path, buffer)
+    //console.log(`open ${path} to see the uploaded file`)
 
     // Validate form using Zod
     const validatedFields = CreateCustomer.safeParse({
@@ -220,7 +222,7 @@ export async function createCustomer(prevState: cState, formData: FormData) {
     } catch (error) {
         // If a database error occurs, return a more specific error.
         return {
-            message: 'Database Error: Failed to Create Invoice.',
+            message: 'Database Error: Failed to Create Customer.',
         };
     }
 
