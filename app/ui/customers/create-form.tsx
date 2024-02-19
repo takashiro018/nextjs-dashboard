@@ -8,15 +8,55 @@ import { Button } from '@/app/ui/button';
 import { createCustomer } from '@/app/lib/action';
 import { useFormState } from 'react-dom';
 import { PhotoIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 export default function Form() {
     const initialState = { message: null, errors: {} }
 
-    const [state, dispatch] = useFormState(createCustomer, initialState);
-    const [file, setFile] = useState<File>()
+    const [state, dispatch] = useFormState(createCustomer, initialState)
 
-    console.log(file);
+    const [imageUrl, setImageUrl] = useState("/customers/amy-burns.png");
+
+    const onImageFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        const fileInput = e.target;
+
+        if (!fileInput.files) {
+            console.warn("no file was chosen");
+            return;
+        }
+
+        if (!fileInput.files || fileInput.files.length === 0) {
+            console.warn("files list is empty");
+            return;
+        }
+
+        const file = fileInput.files[0];
+
+        const formData = new FormData();
+        formData.append('image_url', file);
+
+        try {
+            const res = await fetch("/api/upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!res.ok) {
+                console.error("something went wrong, check your console.");
+                return;
+            }
+
+            const data: { fileUrl: string } = await res.json();
+
+            setImageUrl(data.fileUrl);
+        } catch (error) {
+            console.error("something went wrong, check your console.");
+        }
+
+        /** Reset file input */
+        e.target.type = "text";
+        e.target.type = "file";
+    };
 
     return (
         <form action={dispatch}>
@@ -98,7 +138,13 @@ export default function Form() {
                             Photo
                         </label>
                         <div className="mt-2 flex items-center gap-x-3">
-                            <UserCircleIcon className="h-12 w-12 text-gray-300" aria-hidden="true" />
+                            <Image
+                                src={imageUrl}
+                                alt="uploaded image"
+                                width={720}
+                                height={446}
+                                priority={true}
+                            />
                             <button
                                 type="button"
                                 className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -117,11 +163,11 @@ export default function Form() {
                                 <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
                                 <div className="mt-4 flex text-sm leading-6 text-gray-600">
                                     <label
-                                        htmlFor="file-upload"
+                                        htmlFor="image_url"
                                         className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                                     >
                                         <span>Upload a file</span>
-                                        <input id="file-upload" name="image_url" type="file" className="sr-only" onChange={(e) => setFile(e.target.files?.[0])} />
+                                        <input id="image_url" name="image_url" type="file" className="sr-only" onChange={onImageFileChange} />
                                     </label>
                                     <p className="pl-1">or drag and drop</p>
                                 </div>

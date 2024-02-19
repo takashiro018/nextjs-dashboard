@@ -6,7 +6,8 @@ import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { writeFile } from 'fs/promises'
-import { join } from 'path'
+import path from 'path';
+import { NextResponse } from 'next/server';
 
 export async function authenticate(
     prevState: string | undefined,
@@ -154,6 +155,7 @@ const CFormSchema = z.object({
         invalid_type_error: 'Please enter customer lastname.',
     }),
     email: z.string(),
+
     customerEmail: z.string({
         invalid_type_error: 'Please enter customer email.',
     }),
@@ -177,28 +179,12 @@ export type cState = {
 
 export async function createCustomer(prevState: cState, formData: FormData) {
 
-    // Image
-    const file: File | null = formData.get('image_url') as unknown as File
-    if (!file) {
-        throw new Error('No file uploaded')
-    }
-
-    console.log(file);
-
-    const bytes = await file.arrayBuffer()
-    const buffer = Buffer.from(bytes)
-
-    // With the file data in the buffer, you can do whatever you want with it.
-    // For this, we'll just write it to the filesystem in a new location
-    const path = join('/', 'public/customers/', file.name)
-    await writeFile(path, buffer)
-    console.log(`open ${path} to see the uploaded file`)
-
     // Validate form using Zod
     const validatedFields = CreateCustomer.safeParse({
         customerFirstName: formData.get('first_name'),
         customerLastName: formData.get('last_name'),
         customerEmail: formData.get('email'),
+        customerImg: formData.get('image_url'),
     });
 
     // If form validation fails, return errors early. Otherwise, continue.
