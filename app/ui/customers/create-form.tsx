@@ -28,7 +28,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                         <div className="mt-2">
                             <input
                                 type="text"
-                                name="first-name"
+                                name="first_name"
                                 id="first-name"
                                 autoComplete="given-name"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -43,7 +43,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                         <div className="mt-2">
                             <input
                                 type="text"
-                                name="last-name"
+                                name="last_name"
                                 id="last-name"
                                 autoComplete="family-name"
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -51,8 +51,14 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                         </div>
                     </div>
                     <div id="customer-error" aria-live="polite" aria-atomic="true">
-                        {state.errors?.customerName &&
-                            state.errors.customerName.map((error: string) => (
+                        {state.errors?.customerFirstName &&
+                            state.errors.customerFirstName.map((error: string) => (
+                                <p className="mt-2 text-sm text-red-500" key={error}>
+                                    {error}
+                                </p>
+                            ))}
+                        {state.errors?.customerLastName &&
+                            state.errors.customerLastName.map((error: string) => (
                                 <p className="mt-2 text-sm text-red-500" key={error}>
                                     {error}
                                 </p>
@@ -113,7 +119,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                                         className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                                     >
                                         <span>Upload a file</span>
-                                        <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={(e) => setFile(e.target.files?.[0])} />
+                                        <input id="file-upload" name="image_url" type="file" className="sr-only" onChange={(e) => setFile(e.target.files?.[0])} />
                                     </label>
                                     <p className="pl-1">or drag and drop</p>
                                 </div>
