@@ -16,8 +16,6 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
     const [state, dispatch] = useFormState(createCustomer, initialState);
     const [file, setFile] = useState<File>()
 
-    console.log(file)
-
     return (
         <form action={dispatch}>
             <div className="rounded-md bg-gray-50 p-4 md:p-6">

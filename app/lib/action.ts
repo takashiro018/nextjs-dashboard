@@ -183,7 +183,7 @@ export async function createCustomer(prevState: cState, formData: FormData) {
 
     // With the file data in the buffer, you can do whatever you want with it.
     // For this, we'll just write it to the filesystem in a new location
-    const path = join('/', 'tmp', file.name)
+    const path = join('/', 'public/customers/', file.name)
     await writeFile(path, buffer)
     console.log(`open ${path} to see the uploaded file`)
 
@@ -191,6 +191,7 @@ export async function createCustomer(prevState: cState, formData: FormData) {
     const validatedFields = CreateCustomer.safeParse({
         customerName: formData.get('name'),
         customerEmail: formData.get('email'),
+        customerImg: File,
     });
 
     // If form validation fails, return errors early. Otherwise, continue.
