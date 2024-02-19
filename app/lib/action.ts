@@ -166,7 +166,7 @@ const CFormSchema = z.object({
 });
 
 const CreateCustomer = CFormSchema.omit({ first_name: true, last_name: true, email: true, image_url: true });
-
+console.log(CreateCustomer);
 export type cState = {
     errors?: {
         customerFirstName?: string[];
