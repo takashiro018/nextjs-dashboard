@@ -2,21 +2,21 @@
 
 import { CustomerField } from '@/app/lib/definitions';
 import Link from 'next/link';
-import {
-    CheckIcon,
-    ClockIcon,
-    CurrencyDollarIcon,
-    UserCircleIcon,
-} from '@heroicons/react/24/outline';
+import Image from 'next/image';
+import { UserCircleIcon } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
 import { createCustomer } from '@/app/lib/action';
 import { useFormState } from 'react-dom';
 import { PhotoIcon } from '@heroicons/react/24/solid';
+import { useState } from 'react';
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
-    const initialState = { message: null, errors: {} };
+    const initialState = { message: null, errors: {} }
+
     const [state, dispatch] = useFormState(createCustomer, initialState);
-    console.log(state);
+    const [file, setFile] = useState<File>()
+
+    console.log(file)
 
     return (
         <form action={dispatch}>
@@ -97,7 +97,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                                 type="button"
                                 className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                             >
-                                Change
+                                Upload
                             </button>
                         </div>
                     </div>
@@ -115,7 +115,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                                         className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                                     >
                                         <span>Upload a file</span>
-                                        <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                                        <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={(e) => setFile(e.target.files?.[0])} />
                                     </label>
                                     <p className="pl-1">or drag and drop</p>
                                 </div>
