@@ -35,6 +35,7 @@ export default function Form() {
         const formData = new FormData();
         formData.append('image_url', file);
 
+        console.log(file);
         try {
             const res = await fetch("/api/upload", {
                 method: "POST",
@@ -46,9 +47,9 @@ export default function Form() {
                 return;
             }
 
-            const data: { fileUrl: string } = await res.json();
+            const data: { image_url: string } = await res.json();
 
-            setImageUrl(data.fileUrl);
+            setImageUrl(data.image_url);
         } catch (error) {
             console.error("something went wrong, check your console.");
         }
@@ -141,8 +142,8 @@ export default function Form() {
                             <Image
                                 src={imageUrl}
                                 alt="uploaded image"
-                                width={720}
-                                height={446}
+                                width={48}
+                                height={48}
                                 priority={true}
                             />
                             <button
