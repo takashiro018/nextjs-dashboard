@@ -10,11 +10,13 @@ import { useFormState } from 'react-dom';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 
-export default function Form({ customers }: { customers: CustomerField[] }) {
+export default function Form() {
     const initialState = { message: null, errors: {} }
 
     const [state, dispatch] = useFormState(createCustomer, initialState);
     const [file, setFile] = useState<File>()
+
+    console.log(file);
 
     return (
         <form action={dispatch}>
