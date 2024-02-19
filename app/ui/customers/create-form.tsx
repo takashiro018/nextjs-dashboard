@@ -49,7 +49,7 @@ export default function Form() {
 
             const data: { image_url: string } = await res.json();
 
-            setImageUrl(data.image_url);
+            setImageUrl("/customers/" + data.image_url);
         } catch (error) {
             console.error("something went wrong, check your console.");
         }
