@@ -5,6 +5,8 @@ export async function POST(request: NextRequest) {
     const data = await request.formData()
     const file: File | null = data.get('image_url') as unknown as File
 
+    console.log(data);
+
     if (!file) {
         return NextResponse.json({ success: false })
     }

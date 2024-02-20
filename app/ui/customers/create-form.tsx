@@ -30,7 +30,7 @@ export default function Form() {
 
     console.log(image);
     const uploadToServer = async () => {
-
+        console.log(state);
 
         const data = new FormData()
         data.set('image_url', image)
