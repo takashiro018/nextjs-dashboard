@@ -33,8 +33,8 @@ export default function Form() {
             handleUploadUrl: '/api/upload',
         });
         //console.log(newBlob);
-        setBlob(newBlob);
-        console.log(newBlob?.url)
+        setBlob(newBlob)
+        setImage(newBlob?.url)
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -128,7 +128,7 @@ export default function Form() {
                         </label>
                         <div className="mt-2 flex items-center gap-x-3">
                             <Image
-                                src={createObjectURL}
+                                src={image}
                                 alt="uploaded image"
                                 width={48}
                                 height={48}
@@ -159,7 +159,7 @@ export default function Form() {
                                         <span>Upload a file</span>
                                         <input id="image_url" name="image_url" type="file" className="sr-only"
                                             onChange={uploadToClient}
-                                            ref={inputFileRef} />
+                                            ref={image} />
                                     </label>
                                     <p className="pl-1">or drag and drop</p>
                                 </div>
