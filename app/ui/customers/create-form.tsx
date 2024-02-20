@@ -1,17 +1,14 @@
 'use client';
 
-import { CustomerField } from '@/app/lib/definitions';
 import Link from 'next/link';
 import Image from 'next/image';
-import { UserCircleIcon } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
-import { createCustomer } from '@/app/lib/action';
+import { createCustomer, handler } from '@/app/lib/action';
 import { useFormState } from 'react-dom';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
 import { useState, useRef, ChangeEvent } from 'react';
-import image from 'next/image';
 
 export default function Form() {
     const initialState = { message: null, errors: {} }
@@ -21,7 +18,7 @@ export default function Form() {
     const [image, setImage] = useState("")
     const [createObjectURL, setCreateObjectURL] = useState("");
     const inputFileRef = useRef<HTMLInputElement>(null);
-    const [blob, setBlob] = useState<PutBlobResult | null>();
+    const [blob, setBlob] = useState<PutBlobResult | null>(null);
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -42,11 +39,10 @@ export default function Form() {
 
         const newBlob = await upload(file.name, file, {
             access: 'public',
-            handleUploadUrl: '/api/upload/',
+            handleUploadUrl: '',
         });
-        console.log(newBlob);
+        //console.log(newBlob);
         setBlob(newBlob);
-
     };
 
     return (
