@@ -12,9 +12,8 @@ import { useState, useRef, ChangeEvent } from 'react';
 
 export default function Form() {
     const initialState = { message: null, errors: {} }
-
     const [state, dispatch] = useFormState(createCustomer, initialState)
-    console.log(state);
+
     const [image, setImage] = useState("")
     const [createObjectURL, setCreateObjectURL] = useState("");
     const inputFileRef = useRef<HTMLInputElement>(null);
@@ -27,14 +26,31 @@ export default function Form() {
         }
 
         const image_url = inputFileRef.current.files[0];
-
         const newBlob = await upload(image_url.name, image_url, {
             access: 'public',
             handleUploadUrl: '/api/upload',
         });
-        //console.log(newBlob);
         setBlob(newBlob)
+        const pictureData = new FormData();
+        pictureData.append('image_url', newBlob?.url);
+        //console.log(newBlob);
+        try {
+            const response = await fetch('/api/upload', {
+                method: 'POST',
+                body: pictureData,
+            });
+            const data = await response.json();
+            console.log(data)
+            if (!response.ok) {
+                throw data;
+            }
+            setBlob(null);
+        } catch (error) {
+            console.log(initialState.errors);
+        }
+
     };
+
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const i = e.target.files[0];
