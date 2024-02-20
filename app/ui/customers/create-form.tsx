@@ -166,15 +166,15 @@ export default function Form() {
                             </div>
                         </div>
                     </div>
+                    <div id="customer-error" aria-live="polite" aria-atomic="true">
+                        {state.errors?.customerImg &&
+                            state.errors.customerImg.map((error: string) => (
+                                <p className="mt-2 text-sm text-red-500" key={error}>
+                                    {error}
+                                </p>
+                            ))}
+                    </div>
                 </fieldset>
-                <div id="customer-error" aria-live="polite" aria-atomic="true">
-                    {state.errors?.customerImg &&
-                        state.errors.customerImg.map((error: string) => (
-                            <p className="mt-2 text-sm text-red-500" key={error}>
-                                {error}
-                            </p>
-                        ))}
-                </div>
             </div>
             <div className="mt-6 flex justify-end gap-4">
                 <Link
