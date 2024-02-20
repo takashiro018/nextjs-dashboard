@@ -1,8 +1,10 @@
 import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
 import { NextResponse } from 'next/server';
+import { createCustomer } from '@/app/lib/action';
 
 export async function POST(request: Request): Promise<NextResponse> {
     const body = (await request.json()) as HandleUploadBody;
+    const customer = createCustomer;
 
     try {
         const jsonResponse = await handleUpload({
@@ -28,7 +30,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                 // Get notified of client upload completion
                 // ⚠️ This will not work on `localhost` websites,
                 // Use ngrok or similar to get the full upload flow
-
+                console.log(customer);
                 console.log('blob upload completed', blob, tokenPayload);
 
                 try {
