@@ -34,7 +34,7 @@ export default function Form() {
         });
         //console.log(newBlob);
         setBlob(newBlob)
-        setImage(newBlob?.url)
+        //setImage(newBlob?.url)
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -128,7 +128,7 @@ export default function Form() {
                         </label>
                         <div className="mt-2 flex items-center gap-x-3">
                             <Image
-                                src={image}
+                                src={createObjectURL}
                                 alt="uploaded image"
                                 width={48}
                                 height={48}

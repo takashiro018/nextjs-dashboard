@@ -39,7 +39,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                 }
             },
         });
-
+        console.log(jsonResponse);
         return NextResponse.json(jsonResponse);
     } catch (error) {
         return NextResponse.json(
