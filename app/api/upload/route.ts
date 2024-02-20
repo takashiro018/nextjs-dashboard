@@ -9,8 +9,7 @@ export async function POST(request: Request): Promise<NextResponse> {
             body,
             request,
             onBeforeGenerateToken: async (
-                pathname,
-                /* clientPayload */
+                pathname
             ) => {
                 // Generate a client token for the browser to upload the file
                 // ⚠️ Authenticate and authorize users before generating the token.
@@ -39,7 +38,6 @@ export async function POST(request: Request): Promise<NextResponse> {
                 }
             },
         });
-        console.log(jsonResponse);
         return NextResponse.json(jsonResponse);
     } catch (error) {
         return NextResponse.json(

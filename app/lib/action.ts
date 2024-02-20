@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function authenticate(
     prevState: string | undefined,
@@ -177,7 +177,12 @@ export type cState = {
 
 export async function createCustomer(prevState: cState, formData: FormData) {
 
-    console.log(formData);
+    const api = fetch("/api/upload", {
+        method: "POST",
+        body: formData
+    })
+
+    console.log(api);
 
     // Validate form using Zod
     const validatedFields = CreateCustomer.safeParse({
