@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
+import { NextResponse } from 'next/server';
 
 export async function authenticate(
     prevState: string | undefined,
@@ -24,7 +25,6 @@ export async function authenticate(
         throw error;
     }
 }
-
 
 const FormSchema = z.object({
     id: z.string(),
@@ -53,7 +53,7 @@ export type State = {
 };
 
 export async function createInvoice(prevState: State, formData: FormData) {
-
+    console.log(NextResponse);
     // Validate form using Zod
     const validatedFields = CreateInvoice.safeParse({
         customerId: formData.get('customerId'),
