@@ -14,7 +14,7 @@ export default function Form() {
     const initialState = { message: null, errors: {} }
 
     const [state, dispatch] = useFormState(createCustomer, initialState)
-
+    console.log(state);
     const [image, setImage] = useState("");
     const [createObjectURL, setCreateObjectURL] = useState("");
 
@@ -27,7 +27,7 @@ export default function Form() {
         }
     };
 
-    const uploadToServer = async (event: any) => {
+    const uploadToServer = async () => {
         const body = new FormData();
         console.log('image_url', image)
         console.log(body)
