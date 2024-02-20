@@ -176,7 +176,7 @@ export type cState = {
 };
 
 export async function createCustomer(prevState: cState, formData: FormData) {
-
+    console.log(formData);
     // Validate form using Zod
     const validatedFields = CreateCustomer.safeParse({
         customerFirstName: formData.get('first_name'),
