@@ -34,9 +34,7 @@ export default function Form() {
         });
         //console.log(newBlob);
         setBlob(newBlob)
-        setCreateObjectURL(newBlob?.url)
     };
-    console.log(blob?.url);
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const i = e.target.files[0];
