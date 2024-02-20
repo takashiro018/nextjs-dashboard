@@ -39,7 +39,7 @@ export default function Form() {
 
         const newBlob = await upload(file.name, file, {
             access: 'public',
-            handleUploadUrl: '/lib/action/handler',
+            handleUploadUrl: '/api/upload',
         });
         //console.log(newBlob);
         setBlob(newBlob);
