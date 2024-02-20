@@ -20,19 +20,6 @@ export default function Form() {
     const inputFileRef = useRef<HTMLInputElement>(null);
     const [blob, setBlob] = useState<PutBlobResult | null>(null);
 
-    console.log(image);
-    const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const i = e.target.files[0];
-
-            setImage(i.toString());
-            setCreateObjectURL(URL.createObjectURL(i));
-        }
-
-        const pictureData = new FormData();
-        pictureData.append('image_url', image);
-    }
-
     const uploadToServer = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         if (!inputFileRef.current?.files) {
@@ -47,8 +34,18 @@ export default function Form() {
         });
         //console.log(newBlob);
         setBlob(newBlob);
-        console.log(blob?.url)
+        console.log(newBlob?.url)
     };
+
+    const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const i = e.target.files[0];
+
+            setImage(i.toString());
+            setCreateObjectURL(URL.createObjectURL(i));
+        }
+
+    }
 
     return (
         <form action={dispatch}>
