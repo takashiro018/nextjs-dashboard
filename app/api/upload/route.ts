@@ -21,15 +21,12 @@ export async function POST(request: NextRequest) {
     const relativeUploadDir = `/customers/`;
     const uploadDir = join(process.cwd(), "public", relativeUploadDir);
 
-    console.log(buffer);
-    console.log(relativeUploadDir);
-    console.log(uploadDir);
-    /*try {
+    try {
         //const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-        //const filename = `${file.replace(
+        const filename = `${file.name.replace(
             /\.[^/.]+$/,
             ""
-        //)}.${mime.getExtension(file.type)}`;
+        )}.${mime.getExtension(file.type)}`;
         console.log(filename);
         await writeFile(`${uploadDir}/${filename}`, buffer);
         return NextResponse.json({ fileUrl: `${relativeUploadDir}/${filename}` });
@@ -39,5 +36,5 @@ export async function POST(request: NextRequest) {
             { error: "Something went wrong." },
             { status: 500 }
         );
-    }*/
+    }
 }
