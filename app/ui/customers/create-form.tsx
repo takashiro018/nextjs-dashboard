@@ -33,7 +33,7 @@ export default function Form() {
         body.append('image_url', image);
         const response = await fetch("/api/upload", {
             method: "POST",
-            body
+            body: body
         });
     };
 
