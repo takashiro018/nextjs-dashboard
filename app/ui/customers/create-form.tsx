@@ -29,7 +29,7 @@ export default function Form() {
             console.warn("files list is empty");
             return;
         }
-
+        console.log(fileInput);
         const file = fileInput.files[0];
 
         const formData = new FormData();
