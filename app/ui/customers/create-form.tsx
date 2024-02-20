@@ -32,7 +32,6 @@ export default function Form() {
         }
     }
 
-    //
     const uploadToServer = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
         if (!inputFileRef.current?.files) {
@@ -45,8 +44,9 @@ export default function Form() {
             access: 'public',
             handleUploadUrl: '/api/upload/',
         });
-        //console.log(newBlob);
+        console.log(newBlob);
         setBlob(newBlob);
+
     };
 
     return (
