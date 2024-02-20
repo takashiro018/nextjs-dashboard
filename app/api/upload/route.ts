@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
     const formData = await request.formData();
 
-    const file = formData.get('image_url') as Blob | null;
+    const file = formData.get('image_url');
     if (!file) {
         return NextResponse.json(
             { error: "File blob is required." },
@@ -17,13 +17,13 @@ export async function POST(request: NextRequest) {
 
     console.log(formData);
     console.log(file);
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const relativeUploadDir = `/customers/`;
-    const uploadDir = join(process.cwd(), "public", relativeUploadDir);
+    //const buffer = Buffer.from(await file.arrayBuffer());
+    //const relativeUploadDir = `/customers/`;
+    //const uploadDir = join(process.cwd(), "public", relativeUploadDir);
 
-    try {
+    /*try {
         //const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-        const filename = `${file.name.replace(
+        const filename = `${file.replace(
             /\.[^/.]+$/,
             ""
         )}.${mime.getExtension(file.type)}`;
@@ -36,5 +36,5 @@ export async function POST(request: NextRequest) {
             { error: "Something went wrong." },
             { status: 500 }
         );
-    }
+    }*/
 }

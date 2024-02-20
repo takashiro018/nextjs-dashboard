@@ -29,12 +29,14 @@ export default function Form() {
 
     const uploadToServer = async (event: any) => {
         const body = new FormData();
-        console.log("file", image)
+        console.log('image_url', image)
+        console.log(body)
         body.append('image_url', image);
         const response = await fetch("/api/upload", {
             method: "POST",
             body: body
         });
+        console.log(response)
     };
 
 
