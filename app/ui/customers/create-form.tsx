@@ -40,57 +40,14 @@ export default function Form() {
         }
 
         const file = inputFileRef.current.files[0];
-        console.log(file);
 
         const newBlob = await upload(file.name, file, {
             access: 'public',
             handleUploadUrl: '/api/upload/',
         });
-        console.log(newBlob);
+        //console.log(newBlob);
         setBlob(newBlob);
     };
-
-    /*const onImageFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-        const fileInput = e.target;
-
-        if (!fileInput.files) {
-            console.warn("no file was chosen");
-            return;
-        }
-
-        if (!fileInput.files || fileInput.files.length === 0) {
-            console.warn("files list is empty");
-            return;
-        }
-        console.log(fileInput);
-        const file = fileInput.files[0];
-
-        const formData = new FormData();
-        formData.append('image_url', file);
-
-        console.log(file);
-        try {
-            const res = await fetch("/api/upload", {
-                method: "POST",
-                body: formData,
-            });
-            console.log(res);
-
-            if (!res.ok) {
-                console.error("something went wrong, check your console.");
-                return;
-            }
-
-            const data: { image_url: string } = await res.json();
-            console.log(data);
-            setImageUrl("/customers/" + data.image_url);
-        } catch (error) {
-            console.error("something went wrong, check your console.");
-        }
-
-        /** Reset file input
-        e.target.type = "text";
-        e.target.type = "file";*/
 
     return (
         <form action={dispatch}>

@@ -166,7 +166,7 @@ const CFormSchema = z.object({
 });
 
 const CreateCustomer = CFormSchema.omit({ first_name: true, last_name: true, email: true, image_url: true });
-console.log(CreateCustomer);
+
 export type cState = {
     errors?: {
         customerFirstName?: string[];
@@ -199,7 +199,7 @@ export async function createCustomer(prevState: cState, formData: FormData) {
     // Prepare data for insertion into the database
     const { customerFirstName, customerLastName, customerEmail, customerImg } = validatedFields.data;
 
-    console.log(validatedFields.data);
+    //console.log(validatedFields.data);
 
     // Insert data into the database
     try {
