@@ -15,9 +15,30 @@ export default function Form() {
 
     const [state, dispatch] = useFormState(createCustomer, initialState)
 
-    const [imageUrl, setImageUrl] = useState("/customers/amy-burns.png");
+    const [image, setImage] = useState("");
+    const [createObjectURL, setCreateObjectURL] = useState("");
 
-    const onImageFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const i = e.target.files[0];
+
+            setImage(i.toString());
+            setCreateObjectURL(URL.createObjectURL(i));
+        }
+    };
+
+    const uploadToServer = async (event: any) => {
+        const body = new FormData();
+        console.log("file", image)
+        body.append('image_url', image);
+        const response = await fetch("/api/upload", {
+            method: "POST",
+            body
+        });
+    };
+
+
+    /*const onImageFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const fileInput = e.target;
 
         if (!fileInput.files) {
@@ -55,10 +76,9 @@ export default function Form() {
             console.error("something went wrong, check your console.");
         }
 
-        /** Reset file input */
+        /** Reset file input
         e.target.type = "text";
-        e.target.type = "file";
-    };
+        e.target.type = "file";*/
 
     return (
         <form action={dispatch}>
@@ -141,13 +161,14 @@ export default function Form() {
                         </label>
                         <div className="mt-2 flex items-center gap-x-3">
                             <Image
-                                src={imageUrl}
+                                src={createObjectURL}
                                 alt="uploaded image"
                                 width={48}
                                 height={48}
                                 priority={true}
                             />
                             <button
+                                onClick={uploadToServer}
                                 type="button"
                                 className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                             >
@@ -170,7 +191,7 @@ export default function Form() {
                                     >
                                         <span>Upload a file</span>
                                         <input id="image_url" name="image_url" type="file" className="sr-only"
-                                            onChange={onImageFileChange} />
+                                            onChange={uploadToClient} />
                                     </label>
                                     <p className="pl-1">or drag and drop</p>
                                 </div>
