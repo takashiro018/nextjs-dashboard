@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/app/ui/button';
-import { createCustomer, handler } from '@/app/lib/action';
+import { createCustomer } from '@/app/lib/action';
 import { useFormState } from 'react-dom';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { type PutBlobResult } from '@vercel/blob';
@@ -39,7 +39,7 @@ export default function Form() {
 
         const newBlob = await upload(file.name, file, {
             access: 'public',
-            handleUploadUrl: '',
+            handleUploadUrl: '/lib/action/handler',
         });
         //console.log(newBlob);
         setBlob(newBlob);
