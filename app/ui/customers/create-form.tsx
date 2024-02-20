@@ -27,6 +27,8 @@ export default function Form() {
             setImage(i.toString());
             setCreateObjectURL(URL.createObjectURL(i));
         }
+        console.log(inputFileRef);
+        console.log(blob?.url);
     }
 
     const uploadToServer = async (event: { preventDefault: () => void; }) => {
