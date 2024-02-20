@@ -159,7 +159,7 @@ export default function Form() {
                                         <span>Upload a file</span>
                                         <input id="image_url" name="image_url" type="file" className="sr-only"
                                             onChange={uploadToClient}
-                                            ref={image} />
+                                            ref={inputFileRef} />
                                     </label>
                                     <p className="pl-1">or drag and drop</p>
                                 </div>
