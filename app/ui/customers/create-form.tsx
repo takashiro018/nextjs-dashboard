@@ -8,16 +8,20 @@ import { Button } from '@/app/ui/button';
 import { createCustomer } from '@/app/lib/action';
 import { useFormState } from 'react-dom';
 import { PhotoIcon } from '@heroicons/react/24/solid';
-import { ChangeEvent, useState } from 'react';
+import { type PutBlobResult } from '@vercel/blob';
+import { upload } from '@vercel/blob/client';
+import { useState, useRef, ChangeEvent } from 'react';
+import image from 'next/image';
 
 export default function Form() {
     const initialState = { message: null, errors: {} }
 
     const [state, dispatch] = useFormState(createCustomer, initialState)
     console.log(state);
-    //const [file, setFile] = useState<File>()
-    const [image, setImage] = useState("");
+    const [image, setImage] = useState("")
     const [createObjectURL, setCreateObjectURL] = useState("");
+    const inputFileRef = useRef<HTMLInputElement>(null);
+    const [blob, setBlob] = useState<PutBlobResult | null>();
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -26,24 +30,24 @@ export default function Form() {
             setImage(i.toString());
             setCreateObjectURL(URL.createObjectURL(i));
         }
-    };
+    }
 
-    console.log(image);
-    const uploadToServer = async () => {
-        console.log(state);
+    //
+    const uploadToServer = async (event: { preventDefault: () => void; }) => {
+        event.preventDefault();
+        if (!inputFileRef.current?.files) {
+            throw new Error('No file selected');
+        }
 
-        const data = new FormData()
-        data.set('image_url', image)
-        console.log('image_url', image)
-        console.log(data)
-        //body.append('image_url', image);
-        const response = await fetch("/api/upload", {
-            method: "POST",
-            body: data
+        const file = inputFileRef.current.files[0];
+
+        const newBlob = await upload(file.name, file, {
+            access: 'public',
+            handleUploadUrl: '/api/upload',
         });
-        console.log(response)
-    };
 
+        setBlob(newBlob);
+    };
 
     /*const onImageFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const fileInput = e.target;
@@ -198,7 +202,8 @@ export default function Form() {
                                     >
                                         <span>Upload a file</span>
                                         <input id="image_url" name="image_url" type="file" className="sr-only"
-                                            onChange={uploadToClient} />
+                                            onChange={uploadToClient}
+                                            ref={inputFileRef} />
                                     </label>
                                     <p className="pl-1">or drag and drop</p>
                                 </div>
