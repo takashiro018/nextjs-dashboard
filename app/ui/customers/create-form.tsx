@@ -36,7 +36,7 @@ export default function Form() {
         setBlob(newBlob)
         //setImage(newBlob?.url)
     };
-
+    console.log(blob?.url);
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const i = e.target.files[0];
