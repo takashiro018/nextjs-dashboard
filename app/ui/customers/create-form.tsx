@@ -15,6 +15,7 @@ export default function Form() {
 
     const [state, dispatch] = useFormState(createCustomer, initialState)
     console.log(state);
+    //const [file, setFile] = useState<File>()
     const [image, setImage] = useState("");
     const [createObjectURL, setCreateObjectURL] = useState("");
 
@@ -29,13 +30,16 @@ export default function Form() {
 
     console.log(image);
     const uploadToServer = async () => {
-        const body = new FormData();
+
+
+        const data = new FormData()
+        data.set('image_url', image)
         console.log('image_url', image)
-        console.log(body)
-        body.append('image_url', image);
+        console.log(data)
+        //body.append('image_url', image);
         const response = await fetch("/api/upload", {
             method: "POST",
-            body: body
+            body: data
         });
         console.log(response)
     };
