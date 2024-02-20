@@ -40,12 +40,13 @@ export default function Form() {
         }
 
         const file = inputFileRef.current.files[0];
+        console.log(file);
 
         const newBlob = await upload(file.name, file, {
             access: 'public',
-            handleUploadUrl: '/api/upload',
+            handleUploadUrl: '/api/upload/',
         });
-
+        console.log(newBlob);
         setBlob(newBlob);
     };
 
