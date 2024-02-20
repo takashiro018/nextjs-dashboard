@@ -15,8 +15,6 @@ export async function POST(request: NextRequest) {
         );
     }
 
-    console.log(formData);
-    console.log(file);
     const buffer = Buffer.from(await file.arrayBuffer());
     const relativeUploadDir = `/customers/`;
     const uploadDir = join(process.cwd(), "public", relativeUploadDir);

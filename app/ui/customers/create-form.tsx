@@ -27,6 +27,7 @@ export default function Form() {
         }
     };
 
+    console.log(image);
     const uploadToServer = async () => {
         const body = new FormData();
         console.log('image_url', image)
