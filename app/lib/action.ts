@@ -177,13 +177,6 @@ export type cState = {
 
 export async function createCustomer(prevState: cState, formData: FormData) {
 
-    const api = fetch("/api/upload", {
-        method: "POST",
-        body: formData
-    })
-
-    console.log(api);
-
     // Validate form using Zod
     const validatedFields = CreateCustomer.safeParse({
         customerFirstName: formData.get('first_name'),

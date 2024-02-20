@@ -26,9 +26,9 @@ export default function Form() {
             throw new Error('No file selected');
         }
 
-        const file = inputFileRef.current.files[0];
+        const image_url = inputFileRef.current.files[0];
 
-        const newBlob = await upload(file.name, file, {
+        const newBlob = await upload(image_url.name, image_url, {
             access: 'public',
             handleUploadUrl: '/api/upload',
         });
@@ -44,7 +44,6 @@ export default function Form() {
             setImage(i.toString());
             setCreateObjectURL(URL.createObjectURL(i));
         }
-
     }
 
     return (
