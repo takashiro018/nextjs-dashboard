@@ -30,7 +30,7 @@ export default function Form() {
         }
 
         const image_url = inputFileRef.current.files[0];
-
+        console.log(image_url);
         try {
             // Upload the file to the server
             const newBlob = await upload(image_url.name, image_url, {
