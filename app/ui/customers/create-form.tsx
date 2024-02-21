@@ -73,51 +73,20 @@ export default function Form() {
 
             setBlob(newBlob);
 
-            const formData = new FormData();
-            formData.append('imageUrl', newBlob.pathname);
+            let progress = Math.round((uploadProgress / image_url.size) * 100);
 
-            const xhr = new XMLHttpRequest();
+            // Round the progress to the nearest step of 20%
+            progress = Math.round(progress / 20) * 20;
 
-            xhr.upload.addEventListener('progress', (event) => {
-                if (event.lengthComputable) {
-                    let progress = Math.round((event.loaded / event.total) * 100);
+            // Ensure the progress is not greater than 100%
+            progress = Math.min(progress, 100);
 
-                    // Round the progress to the nearest step of 20%
-                    progress = Math.round(progress / 20) * 20;
-
-                    // Ensure the progress is not greater than 100%
-                    progress = Math.min(progress, 100);
-
-                    setUploadProgress(progress);
-                }
-            });
-
-            xhr.open('POST', '/api/upload');
-            xhr.send(formData);
-
-            xhr.onload = () => {
-                if (xhr.status === 200) {
-                    console.log('Upload complete:', xhr.responseText);
-                    // Handle successful upload
-                } else {
-                    console.error('Failed to upload file:', xhr.statusText);
-                    // Handle upload failure
-                }
-            };
-
-            xhr.onerror = () => {
-                console.error('Error uploading file:', xhr.statusText);
-                // Handle upload error
-            };
+            setUploadProgress(progress);
 
         } catch (error) {
             console.error('Error uploading file:', error);
             // Handle upload error
         }
-
-
-        //setBlob(newBlob)
-        //console.log(inputFileRef);
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
