@@ -199,8 +199,8 @@ export async function createCustomer(prevState: cState, formData: FormData) {
     // Insert data into the database
     try {
         await sql`
-        INSERT INTO customers (id, name, email, image_url)
-        VALUES (id, ${customerFirstName} ${customerLastName}, ${customerEmail}, ${customerImg})
+        INSERT INTO customers (name, email, image_url)
+        VALUES (${customerFirstName} ${customerLastName}, ${customerEmail}, ${customerImg})
         ON CONFLICT (id) DO NOTHING;
       `;
     } catch (error) {
@@ -215,14 +215,6 @@ export async function createCustomer(prevState: cState, formData: FormData) {
     redirect('/dashboard/customers');
 }
 
-
-function useState(arg0: null): [any, any] {
-    throw new Error('Function not implemented.');
-}
-
-function setBlob(arg0: null) {
-    throw new Error('Function not implemented.');
-}
 /*const UpdateCustomer = FormSchema.omit({ id: true, date: true });
 
 export async function updateInvoice(
