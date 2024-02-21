@@ -176,12 +176,15 @@ export type cState = {
 };
 
 export async function createCustomer(prevState: cState, formData: FormData) {
+    const { searchParams } = new URL(NextRequest.name);
+    const blobUrl = searchParams.get('url');
+    console.log(blobUrl);
     // Validate form using Zod
     const validatedFields = CreateCustomer.safeParse({
         customerFirstName: formData.get('first_name'),
         customerLastName: formData.get('last_name'),
         customerEmail: formData.get('email'),
-        customerImg: formData.get('image_url'),
+        customerImg: formData.get(''),
     });
 
     // If form validation fails, return errors early. Otherwise, continue.
