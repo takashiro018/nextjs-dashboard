@@ -32,8 +32,8 @@ export default function Form() {
         );
     };
 
-    const uploadToServer = async (event: { preventDefault: () => void; }) => {
-        event.preventDefault();
+    const uploadToServer = async (event: any) => {
+        //event.preventDefault();
 
         if (!inputFileRef.current?.files) {
             throw new Error('No file selected');
