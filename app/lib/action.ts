@@ -143,14 +143,6 @@ export async function deleteInvoice(id: string) {
     }
 }
 
-export async function fetchImage(image_url: string) {
-    const pictureData = new FormData();
-    pictureData.append('image_url', image_url);
-
-    //console.log('second ' + pictureData);
-    return pictureData;
-}
-
 const CFormSchema = z.object({
     first_name: z.string(),
     customerFirstName: z.string({

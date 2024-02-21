@@ -33,6 +33,9 @@ export default function Form() {
         setBlob(newBlob)
         //fetchImage(newBlob?.url)
         console.log(newBlob?.url);
+
+        const pictureData = new FormData();
+        pictureData.append('image_url', newBlob?.url);
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
