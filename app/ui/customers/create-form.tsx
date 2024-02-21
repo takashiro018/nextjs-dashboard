@@ -42,6 +42,7 @@ export default function Form() {
         const image_url = inputFileRef.current.files[0];
         console.log(image_url);
         console.log(inputFileRef);
+        console.log(event);
         /*const onProgress = async () => {
             const progress = Math.round((uploadProgress / image_url.size) * 100);
             setUploadProgress(progress);
