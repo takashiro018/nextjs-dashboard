@@ -74,13 +74,20 @@ export default function Form() {
             setBlob(newBlob);
 
             const formData = new FormData();
-            formData.append('image_url', newBlob.pathname);
+            formData.append('imageUrl', newBlob.pathname);
 
             const xhr = new XMLHttpRequest();
 
             xhr.upload.addEventListener('progress', (event) => {
                 if (event.lengthComputable) {
-                    const progress = Math.round((event.loaded / event.total) * 100);
+                    let progress = Math.round((event.loaded / event.total) * 100);
+
+                    // Round the progress to the nearest step of 20%
+                    progress = Math.round(progress / 20) * 20;
+
+                    // Ensure the progress is not greater than 100%
+                    progress = Math.min(progress, 100);
+
                     setUploadProgress(progress);
                 }
             });
