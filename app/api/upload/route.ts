@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request): Promise<NextResponse> {
     const body = (await request.json()) as HandleUploadBody;
-
+    console.log(body);
     try {
         const jsonResponse = await handleUpload({
             body,
