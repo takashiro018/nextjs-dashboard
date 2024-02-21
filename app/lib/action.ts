@@ -144,10 +144,8 @@ export async function deleteInvoice(id: string) {
 }
 
 export async function fetchImage(image_url: string) {
-    const [image, setImage] = useState(null)
     const pictureData = new FormData();
-    pictureData.append('image_url', image);
-
+    pictureData.append('image_url', image_url);
     try {
         const response = await fetch('/api/upload', {
             method: 'POST',
@@ -158,7 +156,6 @@ export async function fetchImage(image_url: string) {
         if (!response.ok) {
             throw data;
         }
-        setImage(null);
     } catch (error) {
         console.log(error);
     }
