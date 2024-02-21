@@ -18,12 +18,22 @@ export default function Form() {
     const [blob, setBlob] = useState<PutBlobResult | null>(null);
     const [uploadProgress, setUploadProgress] = useState(0);
 
+    const ProgressBar = ({
+        progress,
+    }: {
+        progress: number;
+    }) => {
+        return (
+            <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style={{ width: `${progress}%` }}>
+                    {`${progress}%`}
+                </div>
+            </div>
+        );
+    };
+
     const uploadToServer = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
-        //const onProgress = async () => {
-        //    const progress = Math.round((event.loaded / event.total) * 100);
-        //    setUploadProgress(progress);
-        //};
 
         if (!inputFileRef.current?.files) {
             throw new Error('No file selected');
@@ -31,6 +41,10 @@ export default function Form() {
 
         const image_url = inputFileRef.current.files[0];
         console.log(image_url);
+        /*const onProgress = async () => {
+            const progress = Math.round((uploadProgress / image_url.size) * 100);
+            setUploadProgress(progress);
+        };
         try {
             // Upload the file to the server
             const newBlob = await upload(image_url.name, image_url, {
@@ -48,6 +62,42 @@ export default function Form() {
 
         } catch (error) {
             console.error('Error uploading image:', error);
+        }*/
+
+        try {
+            const formData = new FormData();
+            formData.append('imageUrl', image_url);
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.upload.addEventListener('progress', (event) => {
+                if (event.lengthComputable) {
+                    const progress = Math.round((event.loaded / event.total) * 100);
+                    setUploadProgress(progress);
+                }
+            });
+
+            xhr.open('POST', '/api/upload');
+            xhr.send(formData);
+
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    console.log('Upload complete:', xhr.responseText);
+                    // Handle successful upload
+                } else {
+                    console.error('Failed to upload file:', xhr.statusText);
+                    // Handle upload failure
+                }
+            };
+
+            xhr.onerror = () => {
+                console.error('Error uploading file:', xhr.statusText);
+                // Handle upload error
+            };
+
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            // Handle upload error
         }
 
 
@@ -161,9 +211,7 @@ export default function Form() {
                             </button>
                         </div>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
-                        <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style={{ width: '45%' }}> 45%</div>
-                    </div>
+                    <ProgressBar progress={uploadProgress} />
                     <div className="col-span-full">
                         <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
                             {blob && (
