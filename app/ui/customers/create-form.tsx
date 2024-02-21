@@ -73,13 +73,7 @@ export default function Form() {
 
             setBlob(newBlob);
 
-            let progress = Math.round((uploadProgress / image_url.size) * 100);
-
-            // Round the progress to the nearest step of 20%
-            progress = Math.round(progress / 20) * 20;
-
-            // Ensure the progress is not greater than 100%
-            progress = Math.min(progress, 100);
+            const progress = Math.round((image_url.size / 4) * 100);
 
             setUploadProgress(progress);
 
