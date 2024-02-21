@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { NextResponse } from 'next/server';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function authenticate(
     prevState: string | undefined,
@@ -195,12 +196,13 @@ export async function createCustomer(prevState: cState, formData: FormData) {
 
     // Prepare data for insertion into the database
     const { customerFirstName, customerLastName, customerEmail, customerImg } = validatedFields.data;
+    const myuuid = uuidv4();
 
     // Insert data into the database
     try {
         await sql`
-        INSERT INTO customers (name, email, image_url)
-        VALUES (${customerFirstName} ${customerLastName}, ${customerEmail}, ${customerImg})
+        INSERT INTO customers (id, name, email, image_url)
+        VALUES (${myuuid}, ${customerFirstName} ${customerLastName}, ${customerEmail}, ${customerImg})
         ON CONFLICT (id) DO NOTHING;
       `;
     } catch (error) {
