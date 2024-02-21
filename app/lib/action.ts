@@ -204,7 +204,7 @@ export async function createCustomer(prevState: cState, formData: FormData) {
     try {
         await sql`
         INSERT INTO customers (id, name, email, image_url)
-        VALUES (${customerId}, ${customerFirstName} ${customerLastName}, ${customerEmail}, ${customerImg})
+        VALUES ('${customerId}', '${customerFirstName} ${customerLastName}', '${customerEmail}', '${customerImg}')
         ON CONFLICT (id) DO NOTHING;
       `;
     } catch (error) {
