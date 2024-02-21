@@ -143,6 +143,27 @@ export async function deleteInvoice(id: string) {
     }
 }
 
+export async function fetchImage(image_url: string) {
+    const [image, setImage] = useState(null)
+    const pictureData = new FormData();
+    pictureData.append('image_url', image);
+
+    try {
+        const response = await fetch('/api/upload', {
+            method: 'POST',
+            body: pictureData,
+        });
+        const data = await response.json();
+        console.log('second' + data)
+        if (!response.ok) {
+            throw data;
+        }
+        setImage(null);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const CFormSchema = z.object({
     first_name: z.string(),
     customerFirstName: z.string({
@@ -217,6 +238,14 @@ export async function createCustomer(prevState: cState, formData: FormData) {
     redirect('/dashboard/customers');
 }
 
+
+function useState(arg0: null): [any, any] {
+    throw new Error('Function not implemented.');
+}
+
+function setBlob(arg0: null) {
+    throw new Error('Function not implemented.');
+}
 /*const UpdateCustomer = FormSchema.omit({ id: true, date: true });
 
 export async function updateInvoice(

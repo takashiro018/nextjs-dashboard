@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/app/ui/button';
-import { createCustomer } from '@/app/lib/action';
+import { createCustomer, fetchImage } from '@/app/lib/action';
 import { useFormState } from 'react-dom';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { type PutBlobResult } from '@vercel/blob';
@@ -31,24 +31,8 @@ export default function Form() {
             handleUploadUrl: '/api/upload',
         });
         setBlob(newBlob)
-        const pictureData = new FormData();
-        pictureData.append('image_url', newBlob?.url);
-        //console.log(newBlob);
-        try {
-            const response = await fetch('/api/upload', {
-                method: 'POST',
-                body: pictureData,
-            });
-            const data = await response.json();
-            console.log(data)
-            if (!response.ok) {
-                throw data;
-            }
-            setBlob(null);
-        } catch (error) {
-            console.log(initialState.errors);
-        }
-
+        fetchImage(newBlob?.url)
+        console.log('first' + newBlob?.url);
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
