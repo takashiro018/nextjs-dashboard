@@ -35,8 +35,6 @@ export default function Form() {
 
         const imageData = new FormData()
         imageData.append('customerImg', newBlob?.url)
-        console.log(imageData);
-        console.log(inputFileRef);
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +42,7 @@ export default function Form() {
             const i = e.target.files[0];
 
             setCreateObjectURL(URL.createObjectURL(i));
-            console.log(image);
+            console.log(blob);
         }
     }
 
