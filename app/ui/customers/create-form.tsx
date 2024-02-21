@@ -34,7 +34,7 @@ export default function Form() {
         setImage(newBlob?.url);
 
         const imageData = new FormData()
-        imageData.append('image_url', newBlob?.url)
+        imageData.append('customerImg', newBlob?.url)
         console.log(imageData);
     };
 
