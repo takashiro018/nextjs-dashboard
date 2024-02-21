@@ -41,6 +41,7 @@ export default function Form() {
 
         const image_url = inputFileRef.current.files[0];
         console.log(image_url);
+        console.log(inputFileRef);
         /*const onProgress = async () => {
             const progress = Math.round((uploadProgress / image_url.size) * 100);
             setUploadProgress(progress);
@@ -73,9 +74,17 @@ export default function Form() {
 
             setBlob(newBlob);
 
-            const progress = Math.round((image_url.size / 4) * 100);
+            /*if (event.lengthComputable) {
+                let progress = Math.round((event.loaded / event.total) * 100);
 
-            setUploadProgress(progress);
+                // Round the progress to the nearest step of 20%
+                progress = Math.ceil(progress / 20) * 20;
+
+                // Ensure the progress is not greater than 100%
+                progress = Math.min(progress, 100);
+
+                setUploadProgress(progress);
+            }*/
 
         } catch (error) {
             console.error('Error uploading file:', error);
