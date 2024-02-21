@@ -30,11 +30,7 @@ export default function Form() {
             handleUploadUrl: '/api/upload',
         });
         setBlob(newBlob)
-        //fetchImage(newBlob?.url)
-        setImage(newBlob?.url);
-
-        const imageData = new FormData()
-        imageData.append('customerImg', newBlob?.url)
+        console.log(newBlob);
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
