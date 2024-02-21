@@ -21,18 +21,25 @@ export default function Form() {
 
     const uploadToServer = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
+
         if (!inputFileRef.current?.files) {
-            throw new Error('No file selected');
+            throw new Error("No file selected");
         }
 
-        const image_url = inputFileRef.current.files[0];
-        const newBlob = await upload(image_url.name, image_url, {
-            access: 'public',
-            handleUploadUrl: '/api/upload',
-        });
-        setBlob(newBlob)
-        //fetchImage(newBlob?.url)
-        setImage(newBlob?.url);
+        const file = inputFileRef.current.files[0];
+        console.log(file.name);
+
+        const response = await fetch(
+            `/api/upload?image_url=${file.name}`,
+            {
+                method: 'POST',
+                body: file,
+            },
+        );
+
+        const newBlob = (await response.json()) as PutBlobResult;
+
+        setBlob(newBlob);
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
