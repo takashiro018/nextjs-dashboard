@@ -3,13 +3,12 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request): Promise<NextResponse> {
     const body = (await request.json()) as HandleUploadBody;
+
     try {
         const jsonResponse = await handleUpload({
             body,
             request,
-            onBeforeGenerateToken: async (
-                pathname
-            ) => {
+            onBeforeGenerateToken: async (pathname) => {
                 // Generate a client token for the browser to upload the file
                 // ⚠️ Authenticate and authorize users before generating the token.
                 // Otherwise, you're allowing anonymous uploads.

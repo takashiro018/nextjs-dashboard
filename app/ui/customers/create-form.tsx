@@ -7,7 +7,7 @@ import { createCustomer } from '@/app/lib/action';
 import { useFormState } from 'react-dom';
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import { type PutBlobResult } from '@vercel/blob';
-import { upload } from '@vercel/blob/client';
+import { uploadPart, upload } from '@vercel/blob/client';
 import { useState, useRef, ChangeEvent } from 'react';
 
 export default function Form() {
@@ -17,19 +17,40 @@ export default function Form() {
     const inputFileRef = useRef<HTMLInputElement>(null);
     const [blob, setBlob] = useState<PutBlobResult | null>(null);
 
+
     const uploadToServer = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
+        //const onProgress = async () => {
+        //    const progress = Math.round((event.loaded / event.total) * 100);
+        //    setUploadProgress(progress);
+        //};
+
         if (!inputFileRef.current?.files) {
             throw new Error('No file selected');
         }
 
         const image_url = inputFileRef.current.files[0];
-        const newBlob = await upload(image_url.name, image_url, {
-            access: 'public',
-            handleUploadUrl: '/api/upload',
-        });
-        setBlob(newBlob)
-        console.log(inputFileRef);
+
+        try {
+            // Upload the file to the server
+            const newBlob = await upload(image_url.name, image_url, {
+                access: 'public',
+                handleUploadUrl: '/api/upload',
+            });
+
+            // Handle successful upload
+            setBlob(newBlob);
+            console.log('Upload complete');
+
+            // Do something with the response, if needed
+
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
+
+
+        //setBlob(newBlob)
+        //console.log(inputFileRef);
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -115,6 +136,9 @@ export default function Form() {
 
                 {/* Customer Image */}
                 <fieldset>
+                    <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                        <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style={{ width: '45%' }}> 45%</div>
+                    </div>
                     <div className="col-span-full">
                         <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">
                             Photo
