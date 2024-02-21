@@ -145,7 +145,6 @@ export async function deleteInvoice(id: string) {
 }
 
 const CFormSchema = z.object({
-    id: z.string(),
     first_name: z.string(),
     customerFirstName: z.string({
         invalid_type_error: 'Please enter customer firstname.',
@@ -168,7 +167,6 @@ const CreateCustomer = CFormSchema.omit({ first_name: true, last_name: true, ema
 
 export type cState = {
     errors?: {
-        id?: string[];
         customerFirstName?: string[];
         customerLastName?: string[];
         customerEmail?: string[];
@@ -179,14 +177,13 @@ export type cState = {
 
 export async function createCustomer(prevState: cState, formData: FormData) {
     // Validate form using Zod
+
     const validatedFields = CreateCustomer.safeParse({
         customerFirstName: formData.get('first_name'),
         customerLastName: formData.get('last_name'),
         customerEmail: formData.get('email'),
         customerImg: formData.get('imageUrl'),
     });
-
-    console.log(validatedFields)
 
     // If form validation fails, return errors early. Otherwise, continue.
     if (!validatedFields.success) {
@@ -196,15 +193,16 @@ export async function createCustomer(prevState: cState, formData: FormData) {
         };
     }
 
+    const customerId = uuidv4();
+    console.log(customerId)
     // Prepare data for insertion into the database
     const { customerFirstName, customerLastName, customerEmail, customerImg } = validatedFields.data;
-    const id = uuidv4();
-    console.log(id)
+
     // Insert data into the database
     try {
         await sql`
         INSERT INTO customers (id, name, email, image_url)
-        VALUES (${id}, ${customerFirstName} ${customerLastName}, ${customerEmail}, ${customerImg})
+        VALUES (${customerId}, ${customerFirstName} ${customerLastName}, ${customerEmail}, ${customerImg})
         ON CONFLICT (id) DO NOTHING;
       `;
     } catch (error) {
