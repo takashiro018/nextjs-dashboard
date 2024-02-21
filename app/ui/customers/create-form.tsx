@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/app/ui/button';
-import { createCustomer, fetchImage } from '@/app/lib/action';
+import { createCustomer } from '@/app/lib/action';
 import { useFormState } from 'react-dom';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { type PutBlobResult } from '@vercel/blob';
@@ -31,7 +31,7 @@ export default function Form() {
             handleUploadUrl: '/api/upload',
         });
         setBlob(newBlob)
-        fetchImage(newBlob?.url)
+        //fetchImage(newBlob?.url)
         console.log(newBlob?.url);
     };
 
@@ -156,7 +156,7 @@ export default function Form() {
                                         <span>Upload a file</span>
                                         <input id="image_url" name="image_url" type="file" className="sr-only"
                                             onChange={uploadToClient}
-                                            ref={inputFileRef} />
+                                            ref={blob?.url} />
                                     </label>
                                     <p className="pl-1">or drag and drop</p>
                                 </div>

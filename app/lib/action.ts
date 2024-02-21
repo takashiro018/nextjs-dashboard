@@ -147,7 +147,7 @@ export async function fetchImage(image_url: string) {
     const pictureData = new FormData();
     pictureData.append('image_url', image_url);
 
-    console.log('second ' + pictureData);
+    //console.log('second ' + pictureData);
     return pictureData;
 }
 
@@ -184,6 +184,7 @@ export type cState = {
 };
 
 export async function createCustomer(prevState: cState, formData: FormData) {
+
     console.log(formData);
     // Validate form using Zod
     const validatedFields = CreateCustomer.safeParse({
