@@ -38,9 +38,10 @@ export default function Form() {
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const i = e.target.files[0];
-            console.log(image)
-            setImage(image);
+
             setCreateObjectURL(URL.createObjectURL(i));
+            setImage(URL.createObjectURL(i))
+            console.log(image)
         }
     }
 
