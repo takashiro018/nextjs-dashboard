@@ -194,6 +194,8 @@ export async function createCustomer(prevState: cState, formData: FormData) {
     // Prepare data for insertion into the database
     const { customerFirstName, customerLastName, customerEmail, customerImg } = validatedFields.data;
 
+    console.log(validatedFields.data)
+
     // Insert data into the database
     try {
         await sql`
