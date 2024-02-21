@@ -193,11 +193,12 @@ export async function createCustomer(prevState: cState, formData: FormData) {
 
     // Prepare data for insertion into the database
     const { customerFirstName, customerLastName, customerEmail, customerImg } = validatedFields.data;
+    const customerName = customerFirstName + ' ' + customerLastName;
 
     // Insert data into the database
     try {
         await sql`
-        INSERT INTO customers (name, email, image_url) VALUES(${customerFirstName} ${customerLastName}, ${customerEmail}, ${customerImg}) ON CONFLICT (id) DO NOTHING;`
+        INSERT INTO customers (name, email, image_url) VALUES(${customerName}, ${customerEmail}, ${customerImg}) ON CONFLICT (id) DO NOTHING;`
     } catch (error) {
         // If a database error occurs, return a more specific error.
         return {
