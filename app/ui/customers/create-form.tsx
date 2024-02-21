@@ -36,6 +36,7 @@ export default function Form() {
             const newBlob = await upload(image_url.name, image_url, {
                 access: 'public',
                 handleUploadUrl: '/api/upload',
+                multipart: true
             });
 
             // Handle successful upload
