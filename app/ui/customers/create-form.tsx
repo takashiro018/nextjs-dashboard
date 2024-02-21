@@ -40,8 +40,7 @@ export default function Form() {
             const i = e.target.files[0];
 
             setCreateObjectURL(URL.createObjectURL(i));
-            setImage(URL.createObjectURL(i))
-            console.log(image)
+            console.log(image);
         }
     }
 

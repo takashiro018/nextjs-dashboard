@@ -181,7 +181,7 @@ export async function createCustomer(prevState: cState, formData: FormData) {
         customerFirstName: formData.get('first_name'),
         customerLastName: formData.get('last_name'),
         customerEmail: formData.get('email'),
-        customerImg: formData.get('ref'),
+        customerImg: formData.get('image_url'),
     });
 
     // If form validation fails, return errors early. Otherwise, continue.
