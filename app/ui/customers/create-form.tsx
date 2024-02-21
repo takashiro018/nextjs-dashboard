@@ -9,6 +9,9 @@ import { PhotoIcon } from '@heroicons/react/24/solid';
 import { type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
 import { useState, useRef, ChangeEvent } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+let customerId = uuidv4();
 
 export default function Form() {
     const initialState = { message: null, errors: {} }
@@ -44,6 +47,12 @@ export default function Form() {
     return (
         <form action={dispatch}>
             <div className="rounded-md bg-gray-50 p-4 md:p-6">
+                {/* Customer Name */}
+                <input
+                    type="hidden"
+                    name="customer_id"
+                    value={customerId}
+                />
                 {/* Customer Name */}
                 <div className="mb-4">
                     <div className="sm:col-span-3">
