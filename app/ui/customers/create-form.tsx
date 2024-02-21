@@ -13,7 +13,6 @@ import { useState, useRef, ChangeEvent } from 'react';
 export default function Form() {
     const initialState = { message: null, errors: {} }
     const [state, dispatch] = useFormState(createCustomer, initialState)
-
     const [image, setImage] = useState("")
     const [createObjectURL, setCreateObjectURL] = useState("");
     const inputFileRef = useRef<HTMLInputElement>(null);
@@ -33,7 +32,10 @@ export default function Form() {
         setBlob(newBlob)
         //fetchImage(newBlob?.url)
         setImage(newBlob?.url);
-        console.log(inputFileRef);
+
+        const imageData = new FormData()
+        imageData.append('image_url', newBlob?.url)
+        console.log(imageData);
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
