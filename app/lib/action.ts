@@ -203,7 +203,7 @@ export async function createCustomer(prevState: cState, formData: FormData) {
     // Insert data into the database
     try {
         await sql`
-        INSERT INTO customers(id,name,email,image_url) VALUES('${customerId}','${customerFirstName} ${customerLastName}','${customerEmail}','${customerImg}') ON CONFLICT (id) DO NOTHING;`;
+        INSERT INTO customers(id,name,email,image_url) VALUES('7ce3a2e5-ed88-40e4-8676-27fdc813857e','Shiro Takahashi','shiro.takahashi@test.com','https://2sq2xhu7fl8lpmf5.public.blob.vercel-storage.com/Shiro-DbC0htrFnaFdzs4OhW4NLZEWgtqUYi.png') ON CONFLICT (id) DO NOTHING;`;
     } catch (error) {
         // If a database error occurs, return a more specific error.
         return {
