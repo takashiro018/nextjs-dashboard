@@ -30,7 +30,7 @@ export default function Form() {
             handleUploadUrl: '/api/upload',
         });
         setBlob(newBlob)
-        console.log(newBlob);
+        console.log(blob?.url);
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {

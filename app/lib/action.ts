@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
+import { list } from '@vercel/blob';
 
 export async function authenticate(
     prevState: string | undefined,
@@ -176,9 +177,9 @@ export type cState = {
 };
 
 export async function createCustomer(prevState: cState, formData: FormData) {
-    const { searchParams } = new URL(NextRequest.name);
-    const blobUrl = searchParams.get('url');
-    console.log(blobUrl);
+    const response = await list();
+
+    console.log(response);
     // Validate form using Zod
     const validatedFields = CreateCustomer.safeParse({
         customerFirstName: formData.get('first_name'),
