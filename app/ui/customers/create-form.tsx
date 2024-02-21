@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/app/ui/button';
 import { createCustomer } from '@/app/lib/action';
 import { useFormState } from 'react-dom';
-import { PhotoIcon } from '@heroicons/react/24/solid';
+import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import { type PutBlobResult } from '@vercel/blob';
 import { upload } from '@vercel/blob/client';
 import { useState, useRef, ChangeEvent } from 'react';
@@ -13,7 +13,6 @@ import { useState, useRef, ChangeEvent } from 'react';
 export default function Form() {
     const initialState = { message: null, errors: {} }
     const [state, dispatch] = useFormState(createCustomer, initialState)
-    const [image, setImage] = useState("")
     const [createObjectURL, setCreateObjectURL] = useState("");
     const inputFileRef = useRef<HTMLInputElement>(null);
     const [blob, setBlob] = useState<PutBlobResult | null>(null);
@@ -121,13 +120,15 @@ export default function Form() {
                             Photo
                         </label>
                         <div className="mt-2 flex items-center gap-x-3">
-                            <Image
-                                src={createObjectURL}
-                                alt="uploaded image"
-                                width={48}
-                                height={48}
-                                priority={true}
-                            />
+                            {createObjectURL ? (
+                                <Image
+                                    src={createObjectURL}
+                                    alt="uploaded image"
+                                    width={48}
+                                    height={48}
+                                    priority={true}
+                                />) : (
+                                <UserCircleIcon className="h-12 w-12 text-gray-300" aria-hidden="true" />)}
                             <button
                                 onClick={uploadToServer}
                                 type="button"
