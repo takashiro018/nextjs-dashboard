@@ -158,13 +158,13 @@ const CFormSchema = z.object({
     customerEmail: z.string({
         invalid_type_error: 'Please enter customer email.',
     }),
-    image_url: z.string(),
+    imageUrl: z.string(),
     customerImg: z.string({
         invalid_type_error: 'Please enter customer image.',
     }),
 });
 
-const CreateCustomer = CFormSchema.omit({ first_name: true, last_name: true, email: true, image_url: true });
+const CreateCustomer = CFormSchema.omit({ first_name: true, last_name: true, email: true, imageUrl: true });
 
 export type cState = {
     errors?: {
@@ -185,7 +185,7 @@ export async function createCustomer(prevState: cState, formData: FormData) {
         customerFirstName: formData.get('first_name'),
         customerLastName: formData.get('last_name'),
         customerEmail: formData.get('email'),
-        customerImg: formData.get(''),
+        customerImg: formData.get('imageUrl'),
     });
 
     // If form validation fails, return errors early. Otherwise, continue.

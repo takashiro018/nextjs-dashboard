@@ -30,7 +30,7 @@ export default function Form() {
             handleUploadUrl: '/api/upload',
         });
         setBlob(newBlob)
-        console.log(blob?.url);
+        console.log(inputFileRef);
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,6 @@ export default function Form() {
             const i = e.target.files[0];
 
             setCreateObjectURL(URL.createObjectURL(i));
-            console.log(blob);
         }
     }
 
@@ -141,7 +140,12 @@ export default function Form() {
 
                     <div className="col-span-full">
                         <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
-                            Cover photo
+                            {blob && (
+                                <input
+                                    id="imageUrl"
+                                    name="imageUrl"
+                                    type="hidden" />
+                            )}
                         </label>
                         <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                             <div className="text-center">
