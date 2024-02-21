@@ -144,10 +144,6 @@ export async function deleteInvoice(id: string) {
 }
 
 const CFormSchema = z.object({
-    customer_id: z.string(),
-    customerId: z.string({
-        invalid_type_error: 'Failed to generate customer ID',
-    }),
     first_name: z.string(),
     customerFirstName: z.string({
         invalid_type_error: 'Please enter customer firstname.',
@@ -166,11 +162,10 @@ const CFormSchema = z.object({
     }),
 });
 
-const CreateCustomer = CFormSchema.omit({ customer_id: true, first_name: true, last_name: true, email: true, imageUrl: true });
+const CreateCustomer = CFormSchema.omit({ first_name: true, last_name: true, email: true, imageUrl: true });
 
 export type cState = {
     errors?: {
-        customerId?: string[];
         customerFirstName?: string[];
         customerLastName?: string[];
         customerEmail?: string[];
@@ -182,7 +177,6 @@ export type cState = {
 export async function createCustomer(prevState: cState, formData: FormData) {
     // Validate form using Zod
     const validatedFields = CreateCustomer.safeParse({
-        customerId: formData.get('customer_id'),
         customerFirstName: formData.get('first_name'),
         customerLastName: formData.get('last_name'),
         customerEmail: formData.get('email'),
@@ -198,12 +192,12 @@ export async function createCustomer(prevState: cState, formData: FormData) {
     }
 
     // Prepare data for insertion into the database
-    const { customerId, customerFirstName, customerLastName, customerEmail, customerImg } = validatedFields.data;
+    const { customerFirstName, customerLastName, customerEmail, customerImg } = validatedFields.data;
 
     // Insert data into the database
     try {
         await sql`
-        INSERT INTO customers (id, name, email, image_url) VALUES(${customerId}, ${customerFirstName} ${customerLastName}, ${customerEmail}, ${customerImg}) ON CONFLICT (id) DO NOTHING;`
+        INSERT INTO customers (name, email, image_url) VALUES(${customerFirstName} ${customerLastName}, ${customerEmail}, ${customerImg}) ON CONFLICT (id) DO NOTHING;`
     } catch (error) {
         // If a database error occurs, return a more specific error.
         return {
