@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request): Promise<NextResponse> {
     const body = (await request.json()) as HandleUploadBody;
-    console.log(body);
     try {
         const jsonResponse = await handleUpload({
             body,
@@ -20,6 +19,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                     tokenPayload: JSON.stringify({
                         // optional, sent to your server on upload completion
                         // you could pass a user id from auth, or a value from clientPayload
+
                     }),
                 };
             },

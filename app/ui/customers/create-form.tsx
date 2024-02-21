@@ -26,6 +26,7 @@ export default function Form() {
         }
 
         const image_url = inputFileRef.current.files[0];
+        console.log(image_url);
         const newBlob = await upload(image_url.name, image_url, {
             access: 'public',
             handleUploadUrl: '/api/upload',
@@ -33,6 +34,7 @@ export default function Form() {
         setBlob(newBlob)
         //fetchImage(newBlob?.url)
         setImage(newBlob?.url);
+        console.log(state.message)
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
