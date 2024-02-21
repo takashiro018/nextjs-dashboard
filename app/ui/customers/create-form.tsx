@@ -32,10 +32,7 @@ export default function Form() {
         });
         setBlob(newBlob)
         //fetchImage(newBlob?.url)
-        console.log(newBlob?.url);
-
-        const pictureData = new FormData();
-        pictureData.append('image_url', newBlob?.url);
+        setImage(newBlob?.url);
     };
 
     const uploadToClient = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +41,9 @@ export default function Form() {
 
             setImage(i.toString());
             setCreateObjectURL(URL.createObjectURL(i));
+
+            const pictureData = new FormData();
+            pictureData.append('image_url', image);
         }
     }
 
