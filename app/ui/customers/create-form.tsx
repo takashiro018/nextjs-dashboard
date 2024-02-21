@@ -39,11 +39,10 @@ export default function Form() {
         if (e.target.files && e.target.files[0]) {
             const i = e.target.files[0];
 
+            console.log(i);
+
             setImage(i.toString());
             setCreateObjectURL(URL.createObjectURL(i));
-
-            const pictureData = new FormData();
-            pictureData.append('image_url', image);
         }
     }
 
