@@ -70,7 +70,11 @@ export default function Form() {
                 handleUploadUrl: '/api/upload',
                 multipart: true
             });
+
             setBlob(newBlob);
+
+            const formData = new FormData();
+            formData.append('image_url', newBlob.pathname);
 
             const xhr = new XMLHttpRequest();
 
@@ -82,7 +86,7 @@ export default function Form() {
             });
 
             xhr.open('POST', '/api/upload');
-            xhr.send(newBlob?.pathname);
+            xhr.send(formData);
 
             xhr.onload = () => {
                 if (xhr.status === 200) {
