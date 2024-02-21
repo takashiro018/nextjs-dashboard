@@ -184,14 +184,12 @@ export type cState = {
 };
 
 export async function createCustomer(prevState: cState, formData: FormData) {
-
-    console.log(formData);
     // Validate form using Zod
     const validatedFields = CreateCustomer.safeParse({
         customerFirstName: formData.get('first_name'),
         customerLastName: formData.get('last_name'),
         customerEmail: formData.get('email'),
-        customerImg: formData.get('image_url'),
+        customerImg: formData.get('ref'),
     });
 
     // If form validation fails, return errors early. Otherwise, continue.
@@ -204,8 +202,6 @@ export async function createCustomer(prevState: cState, formData: FormData) {
 
     // Prepare data for insertion into the database
     const { customerFirstName, customerLastName, customerEmail, customerImg } = validatedFields.data;
-
-    console.log(validatedFields.data);
 
     // Insert data into the database
     try {
