@@ -65,8 +65,12 @@ export default function Form() {
         }*/
 
         try {
-            const formData = new FormData();
-            formData.append('imageUrl', image_url);
+            const newBlob = await upload(image_url.name, image_url, {
+                access: 'public',
+                handleUploadUrl: '/api/upload',
+                multipart: true
+            });
+            setBlob(newBlob);
 
             const xhr = new XMLHttpRequest();
 
@@ -78,7 +82,7 @@ export default function Form() {
             });
 
             xhr.open('POST', '/api/upload');
-            xhr.send(formData);
+            xhr.send(newBlob?.pathname);
 
             xhr.onload = () => {
                 if (xhr.status === 200) {
