@@ -144,7 +144,8 @@ export default function Form() {
                                 <input
                                     id="imageUrl"
                                     name="imageUrl"
-                                    type="hidden" />
+                                    type="hidden"
+                                    value={blob.url} />
                             )}
                         </label>
                         <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
